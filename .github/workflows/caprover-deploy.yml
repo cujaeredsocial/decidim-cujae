@@ -1,0 +1,28 @@
+name: CapRover Deploy
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: "./"
+          files: .
+          outPath: deploy.tar
+
+      - name: Deploy App to CapRover
+        uses: caprover/deploy-from-github@v1.0.1
+        with:
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.CAPROVER_APP_NAME }}'
+          token: '${{ secrets.CAPROVER_APP_TOKEN }}'
