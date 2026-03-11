@@ -11,12 +11,21 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+# Ruby
 COPY Gemfile Gemfile.lock ./
 
 RUN bundle install
 
+# Node
+COPY package.json package-lock.json ./
+
+RUN npm install
+
 COPY . .
+
+# Assets
+RUN bin/rails assets:precompile
 
 EXPOSE 3000
 
-CMD ["bin/dev"]
+CMD ["/bin/bash", "-c", "bin/rails db:prepare && bin/dev"]
