@@ -1,5 +1,5 @@
 # File written by Decidim generator
-# Note: You must restart bin/shakapacker-dev-server for changes to take effect
+# Note: You must restart bin/webpack-dev-server for changes to take effect
 
 default: &default
   source_path: app/packs
@@ -62,8 +62,6 @@ development:
       #  port: 8080
     # Should we use gzip compression?
     compress: true
-    # Disable live reloading for faster development experience
-    live_reload: false
     # Note that apps that do not check the host are vulnerable to DNS rebinding attacks
     allowed_hosts: "all"
     pretty: true

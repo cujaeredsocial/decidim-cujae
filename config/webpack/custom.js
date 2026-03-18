@@ -44,7 +44,7 @@ module.exports = {
           filename: "media/documents/[hash][ext][query]"
         }
       },
-      // Overwrite shakapacker files rule to amend the filename output
+      // Overwrite webpacker files rule to amend the filename output
       // and include the name of the file, otherwise some SVGs
       // are not generated because the hash is the same between them
       {
