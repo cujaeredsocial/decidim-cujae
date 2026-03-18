@@ -16,6 +16,9 @@ COPY Gemfile Gemfile.lock ./
 
 RUN bundle install
 
+# required by decidim:0.30.5
+RUN npm i -g yarn
+
 # Node
 COPY package.json package-lock.json ./
 
