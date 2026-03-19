@@ -41,11 +41,13 @@ module Decidim
 
       private
 
-      def find_user_dn(email)
+      def find_user_dn(login)
+        filter = Net::LDAP::Filter.eq(config[:uid], login) |
+                 Net::LDAP::Filter.eq(config[:email_attribute], login)
+
         connection.search(
           base: config[:base_dn],
-          filter: Net::LDAP::Filter.eq(config[:uid], email),
-          attributes: ["dn"]
+          filter: filter
         )&.first&.dn
       end
 
@@ -68,16 +70,15 @@ module Decidim
 
       def fetch_user_groups(dn)
         groups = []
-        
+
         connection.search(
           base: config[:groups_base_dn] || config[:base_dn],
-          filter: Net::LDAP::Filter.eq("member", dn),
-          attributes: ["cn"]
+          filter: Net::LDAP::Filter.eq("member", dn)
         ) do |entry|
-          groups << entry[:cn]&.first&.to_s
+          groups << entry.dn 
         end
-        
-        groups.compact
+
+        groups
       end
     end
   end

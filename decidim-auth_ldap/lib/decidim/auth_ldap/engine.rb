@@ -12,19 +12,16 @@ module Decidim
         # Add any additional routes if needed
       end
 
-      initializer "decidim_auth_ldap.override_controllers" do
-        config.to_prepare do
-          # Override Devise controllers
-          Decidim::Devise::SessionsController.include(Decidim::AuthLdap::OverrideSessionsController)
-          Decidim::Devise::RegistrationsController.include(Decidim::AuthLdap::OverrideRegistrationsController)
-          Decidim::Devise::PasswordsController.include(Decidim::AuthLdap::OverridePasswordsController)
-        end
-      end
-
       initializer "decidim_auth_ldap.configure_warden" do
         config.to_prepare do
           Warden::Strategies.add(:ldap_authenticatable, Decidim::AuthLdap::LdapStrategy)
         end
+      end
+
+      initializer "decidim_auth_ldap.add_view_paths" do |app|
+        app.config.paths["app/views"].unshift(
+          Decidim::AuthLdap::Engine.root.join("app/views").to_s
+        )
       end
     end
   end

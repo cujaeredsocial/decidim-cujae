@@ -3,7 +3,7 @@
 $LOAD_PATH.push File.expand_path("lib", __dir__)
 
 Gem::Specification.new do |s|
-  s.name = "decidim-auth-ldap"
+  s.name = "decidim-auth_ldap"
   s.version = "0.1.0"
   s.authors = ["Rodny Estrada"]
   s.summary = "LDAP authentication for Consejo Universitario CUJAE"
