@@ -14,6 +14,8 @@ WORKDIR /app
 # Ruby
 COPY Gemfile Gemfile.lock ./
 
+COPY decidim-auth-ldap/decidim-auth-ldap.gemspec ./decidim-auth-ldap/
+
 RUN bundle install
 
 # required by decidim:0.30.5
