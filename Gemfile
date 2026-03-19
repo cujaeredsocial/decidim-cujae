@@ -5,6 +5,7 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 gem "decidim", "0.30.5"
+gem "decidim-auth-ldap", path: "decidim-auth-ldap"
 # gem "decidim-ai", "0.30.5"
 # gem "decidim-conferences", "0.30.5"
 # gem "decidim-design", "0.30.5"
