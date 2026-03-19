@@ -1,0 +1,16 @@
+es:
+  decidim:
+    auth_ldap:
+      sessions:
+        new:
+          ldap_registration_disabled: "El registro está deshabilitado. Por favor, utiliza tus credenciales institucionales para iniciar sesión."
+          ldap_info_message: "Esta plataforma utiliza autenticación institucional (LDAP). Usa tus credenciales universitarias para acceder."
+          ldap_contact_info: "Si no cuentas con credenciales institucionales, por favor contacta al administrador del sistema."
+      registrations:
+        new:
+          ldap_only_title: "Registro Solo a través de LDAP"
+          ldap_only_message: "El registro de usuarios se gestiona a través del sistema LDAP institucional. Por favor, utiliza tus credenciales institucionales para iniciar sesión."
+          contact_administrator: "Si crees que esto es un error, por favor contacta al administrador del sistema."
+        disabled: "El registro está deshabilitado porque la autenticación LDAP está activa."
+      passwords:
+        cannot_change: "La contraseña no se puede cambiar a través de esta interfaz. Por favor, utiliza tus credenciales institucionales LDAP."

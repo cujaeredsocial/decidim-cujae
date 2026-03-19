@@ -1,0 +1,86 @@
+<% add_decidim_page_title(t("devise.sessions.new.log_in")) %>
+
+TESTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTT
+
+<%= render(layout: "layouts/decidim/shared/layout_center") do %>
+
+  <div class="flex justify-center">
+    <h1 class="title-decorator my-12"><%= t("devise.sessions.new.log_in") %></h1>
+  </div>
+
+  <% cache current_organization do %>
+    <%= render partial: "decidim/devise/shared/omniauth_buttons", locals: { is_horizontal: true } %>
+  <% end %>
+
+  <% if current_organization.sign_in_enabled? %>
+    <%= decidim_form_for(resource, namespace: "session", as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form__wrapper">
+        <%= f.email_field :email, autocomplete: "email", placeholder: t("placeholder_email", scope: "decidim.devise.shared"), required: true %>
+
+        <%= render partial: "decidim/account/password_fields", locals: { form: f } %>
+
+      </div>
+      <div class="login__modal-remember">
+          <% if devise_mapping.rememberable? %>
+            <%= f.check_box :remember_me, label_options: { class: "form__wrapper-checkbox-label" } %>
+            <%= link_to t("devise.shared.links.forgot_your_password"), new_password_path(:user), class: "sign-up-link" %>
+          <% end %>
+      </div>
+
+      <div class="login__info mb-10 flex justify-center font-semibold">
+        <% if Decidim::AuthLdap.ldap_enabled %>
+          <% if Decidim::AuthLdap.disable_registration %>
+            <p>
+              <%= t("decidim.auth_ldap.sessions.new.ldap_registration_disabled") %>
+            </p>
+          <% elsif current_organization.sign_up_enabled? %>
+            <p>
+              <%= t("decidim.devise.sessions.new.are_you_new?") %>
+              <%= link_to t("decidim.devise.sessions.new.register"), new_user_registration_path %>
+            </p>
+          <% else %>
+            <p>
+              <%= t("decidim.devise.sessions.new.sign_up_disabled") %>
+            </p>
+          <% end %>
+        <% else %>
+          <% if current_organization.sign_up_enabled? %>
+            <p>
+              <%= t("decidim.devise.sessions.new.are_you_new?") %>
+              <%= link_to t("decidim.devise.sessions.new.register"), new_user_registration_path %>
+            </p>
+          <% else %>
+            <p>
+              <%= t("decidim.devise.sessions.new.sign_up_disabled") %>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="form__wrapper-block">
+        <button type="submit" class="button button__lg button__secondary">
+          <%= t("devise.sessions.new.log_in") %>
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if Decidim::AuthLdap.ldap_enabled && Decidim::AuthLdap.disable_registration %>
+    <div class="ldap-info-message mt-8 p-4 bg-warning-light border border-warning rounded">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <p class="text-sm font-medium">
+          <%= t("decidim.auth_ldap.sessions.new.ldap_info_message") %>
+        </p>
+      </div>
+      <p class="text-xs mt-2 text-gray-600">
+        <%= t("decidim.auth_ldap.sessions.new.ldap_contact_info") %>
+      </p>
+    </div>
+  <% end %>
+<% end %>
