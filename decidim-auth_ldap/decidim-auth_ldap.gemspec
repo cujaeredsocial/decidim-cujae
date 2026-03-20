@@ -10,6 +10,6 @@ Gem::Specification.new do |s|
   
   s.files = Dir["{app,config,lib}/**/*"]
   
-  s.add_dependency "decidim-core", "~> 0.30.5"
+  s.add_dependency "decidim-core", "~> 0.31.1"
   s.add_dependency "net-ldap", "~> 0.16"
 end
