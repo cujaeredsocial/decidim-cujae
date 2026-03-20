@@ -5,7 +5,7 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 gem "decidim", "0.31.1"
-gem "decidim-auth_ldap", path: "./decidim-auth_ldap"
+gem "decidim-cujae-ldap", path: "./decidim-cujae-ldap"
 # gem "decidim-ai", "0.31.1"
 # gem "decidim-collaborative_texts", "0.31.1"
 # gem "decidim-conferences", "0.31.1"
@@ -37,4 +37,4 @@ end
 group :production do
 end
 
-gem "decidim-auth_ldap", path: "decidim-auth_ldap"
+gem "decidim-cujae-ldap", path: "decidim-cujae-ldap"
