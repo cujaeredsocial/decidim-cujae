@@ -6,9 +6,17 @@ module Decidim
       class Engine < ::Rails::Engine
         isolate_namespace Decidim::Cujae::Ldap
 
+        initializer "decidim_cujae_ldap.ignore_overrides" do
+          Rails.autoloaders.main.ignore(
+            Rails.root.join("decidim-cujae-ldap/app/overrides")
+          )
+        end
+        
         initializer "decidim_cujae_ldap.override_models" do
-          ActiveSupport.on_load(:active_record) do
-            require_relative "../../app/overrides/user_override"
+          Rails.application.config.to_prepare do
+            Dir.glob(Rails.root.join("decidim-cujae-ldap/app/overrides/**/*.rb")).each do |file|
+              require_dependency file
+            end
           end
         end
       end

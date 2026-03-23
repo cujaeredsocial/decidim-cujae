@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Decidim::AuthLdap::Engine => "/decidim-cujae-ldap"
+  mount Decidim::Cujae::Ldap::Engine => "/decidim-cujae-ldap"
 end

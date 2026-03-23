@@ -16,10 +16,9 @@ COPY Gemfile Gemfile.lock ./
 
 COPY decidim-cujae-ldap/decidim-cujae-ldap.gemspec ./decidim-cujae-ldap/
 
-RUN bundle install
+COPY decidim-cujae-ldap/lib ./decidim-cujae-ldap/lib/
 
-# required by decidim:0.30.5
-RUN npm i -g yarn
+RUN bundle install
 
 # Node
 COPY package.json package-lock.json ./

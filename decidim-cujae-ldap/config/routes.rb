@@ -1,2 +1,2 @@
-Decidim::AuthLdap::Engine.routes.draw do
+Decidim::Cujae::Ldap::Engine.routes.draw do
 end

@@ -1,4 +1,4 @@
-# Decidim::AuthLdap
+# Decidim::Cujae::Ldap
 Short description and motivation.
 
 ## Usage

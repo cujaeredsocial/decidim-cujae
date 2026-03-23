@@ -1,7 +1,7 @@
 require "test_helper"
 
-class Decidim::AuthLdapTest < ActiveSupport::TestCase
+class Decidim::Cujae::LdapTest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert Decidim::AuthLdap::VERSION
+    assert Decidim::Cujae::Ldap::VERSION
   end
 end
