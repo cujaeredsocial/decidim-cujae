@@ -1,0 +1,37 @@
+<% add_decidim_page_title(t("devise.sessions.new.log_in")) %>
+
+<%= render(layout: "layouts/decidim/shared/layout_center") do %>
+
+  <div class="flex justify-center">
+    <h1 class="title-decorator my-12"><%= t("devise.sessions.new.log_in") %></h1>
+  </div>
+
+  <div class="login__info mb-6 flex justify-center font-semibold text-center">
+    <p>
+      Para acceder, debe tener credenciales válidas del Consejo universitario de la CUJAE.
+    </p>
+  </div>
+
+  <% if current_organization.sign_in_enabled? %>
+    <%= decidim_form_for(resource, namespace: "session", as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form__wrapper">
+        <%= f.email_field :email, autocomplete: "email", placeholder: t("placeholder_email", scope: "decidim.devise.shared"), required: true %>
+
+        <%= render partial: "decidim/account/password_fields", locals: { form: f } %>
+      </div>
+
+      <div class="login__modal-remember">
+        <% if devise_mapping.rememberable? %>
+          <%= f.check_box :remember_me, label_options: { class: "form__wrapper-checkbox-label" } %>
+          <%= link_to t("devise.shared.links.forgot_your_password"), new_password_path(:user), class: "sign-up-link" %>
+        <% end %>
+      </div>
+
+      <div class="form__wrapper-block">
+        <button type="submit" class="button button__lg button__secondary">
+          <%= t("devise.sessions.new.log_in") %>
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

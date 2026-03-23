@@ -4,8 +4,12 @@ require "net/ldap"
 
 class LdapService
   def self.authenticate(login, password)
+    ldap_host = ENV["LDAP_HOST"]
+
+    return nil if ldap_host.blank?
+
     ldap = Net::LDAP.new(
-      host: ENV.fetch("LDAP_HOST"),
+      host: ldap_host,
       port: ENV.fetch("LDAP_PORT", 389),
       auth: {
         method: :simple,
@@ -14,7 +18,10 @@ class LdapService
       }
     )
 
-    return unless ldap.bind
+    unless ldap.bind
+      Rails.logger.warn("[LDAP] Bind fallido para #{login}")
+      return nil
+    end
 
     filter = Net::LDAP::Filter.eq("mail", login) |
              Net::LDAP::Filter.eq("uid", login)
@@ -23,5 +30,14 @@ class LdapService
       base: ENV.fetch("LDAP_BASE"),
       filter: filter
     )&.first
+
+  rescue StandardError => e
+    if ldap_host.present?
+      Rails.logger.error("[LDAP] ERROR CRÍTICO: #{e.class} - #{e.message}")
+      raise e
+    else
+      Rails.logger.warn("[LDAP] LDAP no configurado, fallback a Devise")
+      nil
+    end
   end
 end
