@@ -41,7 +41,6 @@ Decidim::User.class_eval do
           )
         end
 
-        # 🔗 Identity (muy recomendable)
         Decidim::Identity.find_or_create_by!(
           decidim_user_id: user.id,
           provider: "ldap",
@@ -52,7 +51,6 @@ Decidim::User.class_eval do
         return user
       end
 
-      # fallback normal
       original_find_for_authentication(warden_conditions)
     end
   end

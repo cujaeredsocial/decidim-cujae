@@ -4,12 +4,10 @@ require "net/ldap"
 
 class LdapService
   def self.authenticate(login, password)
-    ldap_host = ENV["LDAP_HOST"]
-
-    return nil if ldap_host.blank?
+    return nil if ENV["LDAP_ENABLED"] != true
 
     ldap = Net::LDAP.new(
-      host: ldap_host,
+      host: ENV["LDAP_HOST"],
       port: ENV.fetch("LDAP_PORT", 389),
       auth: {
         method: :simple,
