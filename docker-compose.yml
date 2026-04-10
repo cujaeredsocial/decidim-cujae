@@ -1,7 +1,7 @@
-version: '3'
 services:
   app:
-    image: decidim/decidim:0.31.1
+    build: .
+    container_name: decidim-cujae
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
@@ -11,6 +11,8 @@ services:
       - DATABASE_HOST=pg
       - DATABASE_USERNAME=postgres
       - RAILS_ENV=development
+    env_file:
+      - .env
     ports:
       - 3000:3000
     links:
@@ -20,6 +22,7 @@ services:
     image: postgres
     volumes:
       - pg-data:/var/lib/postgresql/data
+
 volumes:
   node_modules: {}
   bundle: {}
