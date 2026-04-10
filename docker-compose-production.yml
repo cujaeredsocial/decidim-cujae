@@ -1,6 +1,6 @@
 services:
   app:
-    image: decidim-cujae:latest
+    image: decidim-cujae:latest # build image with Dockerfile first
     container_name: decidim-cujae
     volumes:
       - decidim-storage:/app/storage
@@ -14,11 +14,44 @@ services:
       - 3000:3000
     links:
       - pg
+    networks:
+      - decidim-cujae-network
+
   pg:
     image: postgres:14.5
+    container_name: postgres-cujae
     volumes:
       - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-postgres}
+      - POSTGRES_DB=decidim
+    env_file:
+      - .env
+    networks:
+      - decidim-cujae-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-cujae
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - decidim-cujae-network
+    depends_on:
+      - pg
 
 volumes:
   pg-data: {}
   decidim-storage: {}
+  pgadmin-data: {}
+
+networks:
+  decidim-cujae-network:
+    driver: bridge
